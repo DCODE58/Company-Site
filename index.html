@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCODE - Web Development & Tech Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-blue: #3197D6;
+            --light-blue: #8ECAE6;
+            --dark-blue: #1A5F8B;
+            --white: #F7F7F7;
+            --black: #333333;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #F7F7F7 0%, #3197D6 100%);
+            min-height: 100vh;
+            color: var(--black);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwMCAxMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxyYWRpYWxHcmFkaWVudCBpZD0iYSIgY3g9IjAlIiBjeT0iMCUiIHI9IjEwMCUiIGdyYWRpZW50VHJhbnNmb3JtPSJzY2FsZSgxLjUpIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzE5N2Q2IiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZjdmN2Y3IiBzdG9wLW9wYWNpdHk9Ii4xIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PHBhdGggZmlsbD0idXJsKCNhKSIgZD0iTTAgMGgxMDAwdjEwMDBIMHoiLz48L3N2Zz4=');
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background-color: rgba(247, 247, 247, 0.7);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-blue);
+            margin-right: 0.5rem;
+            font-weight: 900;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--primary-blue);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: var(--transition);
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+
+        .hamburger.open span:nth-child(1),
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            transition: var(--transition);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            max-width: 400px;
+            height: 100vh;
+            background: rgba(49, 151, 214, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-nav.open {
+            right: 0;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            width: 100%;
+        }
+
+        .mobile-nav ul li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .mobile-nav ul li::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            width: calc(100% - 2rem);
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .mobile-nav ul li:last-child::after {
+            display: none;
+        }
+
+        .mobile-nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .mobile-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav ul li a.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav ul li a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 3px;
+            background: var(--white);
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Main Content */
+        main {
+            padding: 8rem 5% 4rem;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-bottom: 4rem;
+            animation: slideIn 1s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--black);
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        /* Services Section */
+        .services-section {
+            margin: 4rem 0;
+        }
+
+        .services-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .services-section h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-blue);
+            bottom: -5px;
+            left: 0;
+            border-radius: 3px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(49, 151, 214, 0.2);
+        }
+
+        .service-card.active {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 1002;
+            animation: expand 0.3s ease-out forwards;
+        }
+
+        @keyframes expand {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1001;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .service-card .icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .service-card .short-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--black);
+        }
+
+        .service-card .full-desc {
+            display: none;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .service-card.active .full-desc {
+            display: block;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--black);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--primary-blue);
+            transform: rotate(90deg);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 95, 139, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--white);
+            padding: 3rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--white);
+            bottom: -5px;
+            left: 0;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            nav.desktop-nav {
+                display: none;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .service-card.active {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .service-card.active {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo"><span>&lt;/&gt;</span>DCODE</a>
+        
+        <nav class="desktop-nav">
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#about">About Us</a></li>
+            </ul>
+        </nav>
+        
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#about">About Us</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to DCODE</h1>
+            <p>We are a Tech Startup that focuses on Web Development, Software Engineering, and Tech Consultation. Our team of experts is dedicated to delivering cutting-edge solutions tailored to your business needs.</p>
+        </section>
+        
+        <!-- Services Section -->
+        <section class="services-section">
+            <h2>Services</h2>
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-code"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p class="short-desc">Custom websites and web applications built with modern technologies.</p>
+                    <div class="full-desc">
+                        <p>Our web development services include:</p>
+                        <ul>
+                            <li>Responsive website design</li>
+                            <li>Single Page Applications (SPA)</li>
+                            <li>E-commerce solutions</li>
+                            <li>Content Management Systems</li>
+                            <li>API development and integration</li>
+                        </ul>
+                        <p>We use technologies like React, Angular, Vue.js for frontend and Node.js, Django, Laravel for backend development.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-brush"></i>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p class="short-desc">Beautiful and intuitive user interfaces that enhance user experience.</p>
+                    <div class="full-desc">
+                        <p>Our UI/UX design services include:</p>
+                        <ul>
+                            <li>User research and persona development</li>
+                            <li>Wireframing and prototyping</li>
+                            <li>User interface design</li>
+                            <li>User experience optimization</li>
+                            <li>Usability testing</li>
+                        </ul>
+                        <p>We create designs that are not only visually appealing but also highly functional and user-friendly.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-settings"></i>
+                    </div>
+                    <h3>Network Administration</h3>
+                    <p class="short-desc">Comprehensive network solutions for businesses of all sizes.</p>
+                    <div class="full-desc">
+                        <p>Our network administration services include:</p>
+                        <ul>
+                            <li>Network setup and configuration</li>
+                            <li>Security monitoring and management</li>
+                            <li>Cloud network solutions</li>
+                            <li>VPN setup and management</li>
+                            <li>24/7 network monitoring</li>
+                        </ul>
+                        <p>We ensure your network infrastructure is secure, reliable, and optimized for performance.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-analytics"></i>
+                    </div>
+                    <h3>Data Administration</h3>
+                    <p class="short-desc">Efficient data management and database solutions for your business.</p>
+                    <div class="full-desc">
+                        <p>Our data administration services include:</p>
+                        <ul>
+                            <li>Database design and implementation</li>
+                            <li>Data migration services</li>
+                            <li>Database optimization</li>
+                            <li>Backup and recovery solutions</li>
+                            <li>Data security and compliance</li>
+                        </ul>
+                        <p>We work with SQL and NoSQL databases including MySQL, PostgreSQL, MongoDB, and more.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-phone-portrait"></i>
+                    </div>
+                    <h3>Mobile App Development</h3>
+                    <p class="short-desc">Cross-platform mobile applications for iOS and Android.</p>
+                    <div class="full-desc">
+                        <p>Our mobile app development services include:</p>
+                        <ul>
+                            <li>Native iOS and Android development</li>
+                            <li>Cross-platform apps with Flutter/React Native</li>
+                            <li>App UI/UX design</li>
+                            <li>API integration</li>
+                            <li>App store deployment</li>
+                        </ul>
+                        <p>We build performant mobile applications that deliver exceptional user experiences.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-cloud"></i>
+                    </div>
+                    <h3>Cloud Solutions</h3>
+                    <p class="short-desc">Scalable cloud infrastructure and services for your business.</p>
+                    <div class="full-desc">
+                        <p>Our cloud solutions include:</p>
+                        <ul>
+                            <li>Cloud migration services</li>
+                            <li>AWS, Azure, and Google Cloud solutions</li>
+                            <li>Serverless architecture</li>
+                            <li>Cloud security and compliance</li>
+                            <li>Cost optimization</li>
+                        </ul>
+                        <p>We help businesses leverage cloud computing to improve scalability and reduce costs.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 7 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-lock"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p class="short-desc">Comprehensive security solutions to protect your digital assets.</p>
+                    <div class="full-desc">
+                        <p>Our cybersecurity services include:</p>
+                        <ul>
+                            <li>Security audits and assessments</li>
+                            <li>Penetration testing</li>
+                            <li>Security policy development</li>
+                            <li>Incident response planning</li>
+                            <li>Employee security training</li>
+                        </ul>
+                        <p>We provide end-to-end security solutions to protect your business from evolving threats.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 8 -->
+                <div class="service-card">
+                    <div class="icon">
+                        <i class="icon ion-md-bulb"></i>
+                    </div>
+                    <h3>IT Consulting</h3>
+                    <p class="short-desc">Strategic technology advice to drive your business forward.</p>
+                    <div class="full-desc">
+                        <p>Our IT consulting services include:</p>
+                        <ul>
+                            <li>Technology strategy development</li>
+                            <li>Digital transformation consulting</li>
+                            <li>IT infrastructure planning</li>
+                            <li>Software selection assistance</li>
+                            <li>Technology roadmap creation</li>
+                        </ul>
+                        <p>We help businesses align their technology investments with their strategic objectives.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Overlay for expanded service cards -->
+        <div class="overlay"></div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="icon ion-md-mail"></i> info@dcode.com</p>
+                <p><i class="icon ion-md-call"></i> +1 (555) 123-4567</p>
+                <p><i class="icon ion-md-pin"></i> 123 Tech Street, Silicon Valley, CA</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#about">About Us</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="icon ion-logo-facebook"></i></a>
+                    <a href="#"><i class="icon ion-logo-twitter"></i></a>
+                    <a href="#"><i class="icon ion-logo-linkedin"></i></a>
+                    <a href="#"><i class="icon ion-logo-instagram"></i></a>
+                    <a href="#"><i class="icon ion-logo-github"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; <span id="year"></span> DCODE. All Rights Reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Current year for copyright
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('.mobile-nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+        
+        // Service card expansion functionality
+        const serviceCards = document.querySelectorAll('.service-card');
+        const overlay = document.querySelector('.overlay');
+        
+        serviceCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Don't do anything if this card is already active
+                if (this.classList.contains('active')) return;
+                
+                // Close any currently open cards
+                document.querySelectorAll('.service-card.active').forEach(activeCard => {
+                    activeCard.classList.remove('active');
+                });
+                
+                // Open this card
+                this.classList.add('active');
+                overlay.classList.add('active');
+                
+                // Add close button functionality
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = '&times;';
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.classList.remove('active');
+                    overlay.classList.remove('active');
+                    closeBtn.remove();
+                });
+                this.appendChild(closeBtn);
+            });
+        });
+        
+        // Close expanded card when clicking overlay
+        overlay.addEventListener('click', () => {
+            document.querySelectorAll('.service-card.active').forEach(activeCard => {
+                activeCard.classList.remove('active');
+                overlay.classList.remove('active');
+                activeCard.querySelector('.close-btn')?.remove();
+            });
+        });
+        
+        // Prevent card from closing when clicking inside it
+        serviceCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (this.classList.contains('active')) {
+                    e.stopPropagation();
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
