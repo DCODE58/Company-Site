@@ -203,21 +203,21 @@
             position: fixed;
             top: 0;
             right: -100%;
-            width: 80%;
+            width: 45%;
             max-width: 350px;
             height: 100vh;
-            background: rgba(30, 30, 30, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(20px);
             box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
             z-index: 999;
-            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: all 0.6s ease-out;
             padding: 6rem 2rem 2rem;
             display: flex;
             flex-direction: column;
             border-left: 1px solid rgba(0, 168, 255, 0.1);
             opacity: 0;
-            visibility: hidden;
+            visibility: hidden; 
         }
 
         .mobile-nav.open {
@@ -816,85 +816,11 @@
                     <p>Our approach combines technical expertise with creative problem-solving to deliver solutions that are both functional and visually stunning.</p>
                 </div>
                 
-                <div class="business-card-container">
-                    <div class="business-card">
-                        <div class="developer-header">
-                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Lead Developer" class="developer-image">
-                            <div class="developer-title-container">
-                                <h3 class="developer-name">Alex Johnson</h3>
-                                <p class="developer-title">Lead Developer & Founder</p>
-                            </div>
-                        </div>
-                        
-                        <hr class="developer-divider">
-                        
-                        <div class="developer-info">
-                            <p><i class="icon ion-md-code"></i> 10+ years in web development</p>
-                            <p><i class="icon ion-md-stats"></i> Specializes in React & Node.js</p>
-                            <p><i class="icon ion-md-school"></i> Computer Science Master's</p>
-                            <p><i class="icon ion-md-laptop"></i> 50+ projects delivered</p>
-                            <p><i class="icon ion-md-globe"></i> Full-stack development expert</p>
-                            <p><i class="icon ion-md-ribbon"></i> Award-winning solutions</p>
-                        </div>
-                        
-                        <a href="https://portfolio.example.com" class="portfolio-btn" target="_blank">
-                            View Portfolio <i class="icon ion-md-arrow-forward"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
         </section>
         
         <!-- Team Section -->
-        <section class="team-section">
-            <h3>Meet The Team</h3>
-            
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Sarah Miller">
-                    <h4>Sarah Miller</h4>
-                    <p>UI/UX Designer</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="LinkedIn"><i class="icon ion-logo-linkedin"></i></a>
-                        <a href="#" aria-label="Dribbble"><i class="icon ion-logo-dribbble"></i></a>
-                        <a href="#" aria-label="Behance"><i class="icon ion-logo-behance"></i></a>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Michael Chen">
-                    <h4>Michael Chen</h4>
-                    <p>Backend Developer</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="GitHub"><i class="icon ion-logo-github"></i></a>
-                        <a href="#" aria-label="Stack Overflow"><i class="icon ion-logo-stackoverflow"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="icon ion-logo-twitter"></i></a>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Jessica Williams">
-                    <h4>Jessica Williams</h4>
-                    <p>Mobile Developer</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="GitHub"><i class="icon ion-logo-github"></i></a>
-                        <a href="#" aria-label="Medium"><i class="icon ion-logo-medium"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="icon ion-logo-twitter"></i></a>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="David Kim">
-                    <h4>David Kim</h4>
-                    <p>DevOps Engineer</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="GitHub"><i class="icon ion-logo-github"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="icon ion-logo-twitter"></i></a>
-                        <a href="#" aria-label="Docker"><i class="icon ion-logo-docker"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
     </main>
     
     <!-- Footer -->
@@ -902,9 +828,9 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <p><i class="icon ion-md-mail"></i> info@dcode.com</p>
-                <p><i class="icon ion-md-call"></i> +1 (555) 123-4567</p>
-                <p><i class="icon ion-md-pin"></i> 123 Tech Street, Silicon Valley, CA</p>
+                <p><i class="icon ion-md-mail"></i> dcodedevs@gmail.com</p>
+                <p><i class="icon ion-md-call"></i>+254-768-372532</p>
+                <p><i class="icon ion-md-pin"></i> Nairobi , KE</p>
             </div>
             
             <div class="footer-section">
