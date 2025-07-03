@@ -594,6 +594,286 @@
             font-size: 0.9rem;
         }
 
+        /* Chatbot Styles */
+        .chatbot-btn {
+            position: fixed;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 168, 255, 0.4);
+            z-index: 999;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+        }
+
+        .chatbot-btn:hover {
+            background: var(--light-blue);
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.6);
+        }
+
+        .chatbot-btn i {
+            color: var(--white);
+            font-size: 1.8rem;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            right: 30px;
+            width: 350px;
+            max-width: 90%;
+            height: 500px;
+            max-height: 70vh;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                        inset 0 0 10px rgba(0, 168, 255, 0.2);
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chatbot-container.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .chatbot-header {
+            background: rgba(0, 168, 255, 0.2);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+        }
+
+        .chatbot-header h3 {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin-left: 10px;
+        }
+
+        .chatbot-header i {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+        }
+
+        .chatbot-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .chatbot-close:hover {
+            opacity: 1;
+            color: var(--primary-blue);
+            transform: rotate(90deg);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-blue) transparent;
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background-color: var(--primary-blue);
+            border-radius: 3px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+        }
+
+        .message-bot {
+            align-items: flex-start;
+        }
+
+        .message-user {
+            align-items: flex-end;
+        }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-top: 5px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .message-bot .message-content {
+            background: rgba(0, 168, 255, 0.1);
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            border-top-left-radius: 5px;
+            color: var(--white);
+        }
+
+        .message-user .message-content {
+            background: rgba(0, 168, 255, 0.3);
+            border: 1px solid rgba(0, 168, 255, 0.4);
+            border-bottom-right-radius: 5px;
+            color: var(--white);
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 3px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            padding: 10px 15px;
+            background: rgba(0, 168, 255, 0.1);
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            border-radius: 18px;
+            border-top-left-radius: 5px;
+            width: fit-content;
+            margin-bottom: 15px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            margin: 0 2px;
+            opacity: 0.4;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                opacity: 0.4;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--white);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+        }
+
+        .chatbot-send {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-send:hover {
+            background: var(--light-blue);
+            transform: scale(1.05);
+        }
+
+        .chatbot-send i {
+            font-size: 1.1rem;
+        }
+
+        /* Mobile positioning */
+        @media (max-width: 768px) {
+            .chatbot-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+            }
+
+            .chatbot-container {
+                right: 20px;
+                bottom: 80px;
+                width: calc(100% - 40px);
+                height: 60vh;
+            }
+        }
+
+        /* Desktop positioning */
+        @media (min-width: 769px) {
+            .chatbot-btn {
+                bottom: 40px;
+            }
+
+            .chatbot-container {
+                bottom: 100px;
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .hero h1 {
@@ -904,6 +1184,36 @@
             &copy; <span id="year"></span> DCODE. All Rights Reserved. Powered by Dave
         </div>
     </footer>
+
+    <!-- Chatbot Button -->
+    <button class="chatbot-btn" aria-label="Open Chat">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <i class="fas fa-robot"></i>
+            <h3>DCODE Assistant</h3>
+            <button class="chatbot-close" aria-label="Close Chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages">
+            <div class="message message-bot">
+                <div class="message-content">
+                    Hello! I'm the DCODE assistant. How can I help you today?
+                </div>
+                <div class="message-time">Just now</div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type your message..." id="chatbot-input-field">
+            <button class="chatbot-send" aria-label="Send Message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
     
     <script>
         // Current year for copyright
@@ -1000,6 +1310,141 @@
                 }
             });
         });
+
+        // Chatbot functionality
+        const chatbotBtn = document.querySelector('.chatbot-btn');
+        const chatbotContainer = document.querySelector('.chatbot-container');
+        const chatbotClose = document.querySelector('.chatbot-close');
+        const chatInput = document.getElementById('chatbot-input-field');
+        const chatSend = document.querySelector('.chatbot-send');
+        const chatMessages = document.querySelector('.chatbot-messages');
+
+        // Toggle chatbot visibility
+        chatbotBtn.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('open');
+        });
+
+        // Close chatbot
+        chatbotClose.addEventListener('click', () => {
+            chatbotContainer.classList.remove('open');
+        });
+
+        // Send message function
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+
+            // Add user message to chat
+            addMessage(message, 'user');
+            chatInput.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate bot response after a delay
+            setTimeout(() => {
+                removeTypingIndicator();
+                const botResponse = getBotResponse(message);
+                addMessage(botResponse, 'bot');
+                
+                // Scroll to bottom of chat
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+        }
+
+        // Send message on button click
+        chatSend.addEventListener('click', sendMessage);
+
+        // Send message on Enter key
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add a new message to the chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${sender}`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = text;
+            
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = getCurrentTime();
+            
+            messageDiv.appendChild(messageContent);
+            messageDiv.appendChild(messageTime);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom of chat
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typing-indicator';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'typing-dot';
+                typingDiv.appendChild(dot);
+            }
+            
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Get current time in HH:MM format
+        function getCurrentTime() {
+            const now = new Date();
+            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        }
+
+        // Simple bot response logic
+        function getBotResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return "Hello there! How can I assist you with DCODE services today?";
+            } else if (lowerMessage.includes('service') || lowerMessage.includes('offer')) {
+                return "We offer a range of services including web development, UI/UX design, mobile app development, and more. Would you like details on any specific service?";
+            } else if (lowerMessage.includes('web') || lowerMessage.includes('website')) {
+                return "Our web development services include creating responsive websites, SPAs, e-commerce solutions, and CMS development. We use modern technologies like React, Angular, and Node.js.";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone')) {
+                return "You can contact us at dcodedevs@gmail.com or call +254-768-372532. Our office is in Nairobi, Kenya.";
+            } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+                return "Our pricing depends on the project scope and requirements. Could you share more details about what you need so we can provide an accurate estimate?";
+            } else if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+                return "You're welcome! Is there anything else I can help you with?";
+            } else {
+                const randomResponses = [
+                    "I'd be happy to help with that. Could you provide more details?",
+                    "That's an interesting question. Let me connect you with one of our experts.",
+                    "We specialize in that area! Would you like me to send you more information?",
+                    "I can help answer questions about our services. What specifically would you like to know?",
+                    "For detailed inquiries, I recommend contacting our team directly via email or phone."
+                ];
+                return randomResponses[Math.floor(Math.random() * randomResponses.length)];
+            }
+        }
+
+        // Initialize chat with welcome message if empty
+        if (chatMessages.children.length === 0) {
+            addMessage("Hello! I'm the DCODE assistant. How can I help you today?", 'bot');
+        }
     </script>
 </body>
 </html>
