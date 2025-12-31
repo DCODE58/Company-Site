@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,6 +76,7 @@
             color: var(--white);
             text-decoration: none;
             letter-spacing: 1px;
+            z-index: 1002;
         }
 
         .logo span {
@@ -153,9 +155,48 @@
             left: 4px;
         }
 
-        /* Navigation - Hidden by default on mobile */
+        /* Desktop Navigation - Hidden on mobile */
         nav.desktop-nav {
             display: none;
+        }
+
+        .desktop-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .desktop-nav ul li {
+            position: relative;
+        }
+
+        .desktop-nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: block;
+            position: relative;
+            background: rgba(0, 168, 255, 0.05);
+            border: 1px solid transparent;
+        }
+
+        .desktop-nav ul li a:hover {
+            background: rgba(0, 168, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+            border-color: rgba(0, 168, 255, 0.3);
+        }
+
+        .desktop-nav ul li a.active {
+            background: rgba(0, 168, 255, 0.2);
+            border: 1px solid var(--primary-blue);
+            box-shadow: var(--glow);
         }
 
         /* Mobile Navigation */
@@ -498,6 +539,33 @@
                 display: none;
             }
             
+            /* Improved desktop navigation styling */
+            .desktop-nav ul {
+                gap: 2rem;
+            }
+            
+            .desktop-nav ul li a {
+                font-size: 1.1rem;
+                padding: 0.7rem 1.2rem;
+                background: rgba(0, 168, 255, 0.08);
+            }
+            
+            .desktop-nav ul li a:hover {
+                background: rgba(0, 168, 255, 0.2);
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 168, 255, 0.3);
+            }
+            
+            .desktop-nav ul li a.active {
+                background: rgba(0, 168, 255, 0.25);
+                border: 1px solid var(--primary-blue);
+                box-shadow: 0 0 20px rgba(0, 168, 255, 0.4);
+            }
+            
+            header {
+                padding: 1.2rem 5%;
+            }
+            
             .about-content {
                 flex-direction: row;
                 max-width: 1200px;
@@ -524,6 +592,19 @@
 
         /* Large Desktop Styles */
         @media (min-width: 1200px) {
+            .desktop-nav ul {
+                gap: 2.5rem;
+            }
+            
+            .desktop-nav ul li a {
+                font-size: 1.15rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            header {
+                padding: 1.5rem 8%;
+            }
+            
             .about-section h2 {
                 font-size: 2.8rem;
             }
@@ -535,6 +616,10 @@
             .about-text p {
                 font-size: 1.1rem;
             }
+            
+            main {
+                padding: 7rem 8% 3rem;
+            }
         }
     </style>
 </head>
@@ -543,7 +628,7 @@
     <header>
         <a href="index.html" class="logo"><span>&lt;/&gt;</span>DCODE</a>
         
-        <nav class="desktop-nav">
+        <nav class="desktop-nav" aria-label="Main navigation">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
@@ -580,7 +665,7 @@
                 <div class="about-text">
                     <h3>Innovating Since 2020</h3>
                     <p id="typewriter-text" class="typewriter"></p>
-                    <a href="https://davescard.vercel.app/" id="dev-card-link" class="dev-card-link" target="_blank">
+                    <a href="https://davescard.vercel.app/" id="dev-card-link" class="dev-card-link" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-id-card"></i> View Developer's Business Card
                     </a>
                 </div>
@@ -609,75 +694,4 @@
             <div class="footer-section">
                 <h3>Connect With Us</h3>
                 <div class="social-icons">
-                    <a href="#" aria-label="Facebook"><i class="icon ion-logo-facebook"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="icon ion-logo-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="icon ion-logo-linkedin"></i></a>
-                    <a href="#" aria-label="GitHub"><i class="icon ion-logo-github"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            &copy; <span id="year"></span> DCODE. All Rights Reserved.
-        </div>
-    </footer>
-    
-    <script>
-        // Current year for copyright
-        document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // Enhanced Hamburger Menu Animation
-        const hamburger = document.querySelector('.hamburger');
-        const mobileNav = document.querySelector('.mobile-nav');
-        const body = document.body;
-        
-        hamburger.addEventListener('click', function() {
-            this.classList.toggle('open');
-            mobileNav.classList.toggle('open');
-            mobileNav.setAttribute('aria-hidden', !mobileNav.classList.contains('open'));
-            
-            if (mobileNav.classList.contains('open')) {
-                body.style.overflow = 'hidden';
-            } else {
-                body.style.overflow = '';
-            }
-        });
-        
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.mobile-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileNav.classList.remove('open');
-                mobileNav.setAttribute('aria-hidden', 'true');
-                body.style.overflow = '';
-            });
-        });
-        
-        // Typewriter effect
-        const typewriterText = document.getElementById('typewriter-text');
-        const devCardLink = document.getElementById('dev-card-link');
-        const textToType = "DCODE was founded with a vision to bridge the gap between cutting-edge technology and business solutions. Our team of passionate developers, designers, and strategists work together to deliver exceptional digital experiences. We specialize in creating custom web applications, mobile solutions, and enterprise software that drive business growth and enhance user engagement. Our approach combines technical expertise with creative problem-solving to deliver solutions that are both functional and visually stunning.";
-        
-        let i = 0;
-        let isEnd = false;
-        let typingSpeed = 20;
-        
-        function typeWriter() {
-            if (i < textToType.length && !isEnd) {
-                typewriterText.textContent += textToType.charAt(i);
-                i++;
-                setTimeout(typeWriter, typingSpeed);
-            } else if (i === textToType.length && !isEnd) {
-                isEnd = true;
-                // Show the developer card link after typing is complete
-                devCardLink.classList.add('visible');
-                // Remove the typewriter cursor
-                typewriterText.style.borderRight = 'none';
-            }
-        }
-        
-        // Start the typewriter effect after a short delay
-        setTimeout(typeWriter, 500);
-    </script>
-</body>
-</html>
+                    <a hr
