@@ -595,35 +595,46 @@
         }
 
         /* Chatbot Styles */
-        .chatbot-btn {
-            position: fixed;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: var(--primary-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0, 168, 255, 0.4);
-            z-index: 999;
-            transition: var(--transition);
-            border: none;
-            outline: none;
-        }
+        /* Glassy chatbot button: almost transparent with a subtle blue glow */
+.chatbot-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 40px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.02); /* very transparent glass */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* soft drop shadow + subtle glow */
+    box-shadow:
+        0 6px 18px rgba(0, 168, 255, 0.12),
+        0 0 30px rgba(0, 168, 255, 0.06);
+    border: 1px solid rgba(0, 168, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+    transition: var(--transition);
+    outline: none;
+}
 
-        .chatbot-btn:hover {
-            background: var(--light-blue);
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.6);
-        }
+/* Slightly stronger glow + scale on hover for affordance */
+.chatbot-btn:hover {
+    background: rgba(255, 255, 255, 0.03);
+    transform: scale(1.06);
+    box-shadow:
+        0 10px 30px rgba(0, 168, 255, 0.18),
+        0 0 50px rgba(0, 168, 255, 0.12);
+}
 
-        .chatbot-btn i {
-            color: var(--white);
-            font-size: 1.8rem;
-        }
-
+/* Use a blue icon with a faint halo to emphasize the glow */
+.chatbot-btn i {
+    color: var(--primary-blue);
+    font-size: 1.6rem;
+    text-shadow: 0 0 8px rgba(0, 168, 255, 0.45);
+}
         .chatbot-container {
             position: fixed;
             right: 30px;
