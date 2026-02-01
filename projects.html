@@ -500,28 +500,36 @@
             flex-grow: 1;
         }
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
-        }
+        /* Tag pills: more refined glassy chips */
+.project-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
 
-        .project-tag {
-            background: rgba(0, 168, 255, 0.15);
-            color: var(--primary-blue);
-            padding: 0.4rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: var(--transition);
-        }
+.project-tag {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color: rgba(255,255,255,0.92);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 0.36rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: transform 0.25s, background 0.25s, color 0.25s;
+}
 
-        .project-tag:hover {
-            background: rgba(0, 168, 255, 0.3);
-            transform: translateY(-2px);
-        }
+/* a touch of contrast on hover */
+.project-tag:hover {
+    transform: translateY(-3px);
+    background: rgba(0,168,255,0.08);
+    color: var(--white);
+    box-shadow: 0 6px 18px rgba(0,168,255,0.06);
+    border-color: rgba(0,168,255,0.12);
+}
 
         .project-links {
             display: flex;
