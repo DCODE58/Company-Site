@@ -460,22 +460,31 @@
            /* move card content above the visual overlays */
           .project-card > * { position: relative; z-index: 1; }
 
+         /* hover elevation and stronger glow */
         .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 168, 255, 0.2),
-                        inset 0 0 15px rgba(0, 168, 255, 0.1);
-            border: 1px solid rgba(0, 168, 255, 0.3);
-        }
-
+          transform: translateY(-10px) scale(1.01);
+          box-shadow:0 25px 60px rgba(0, 116, 204, 0.16),inset 0 1px 0 rgba(255,255,255,0.04);
+          border: 1px solid rgba(0,168,255,0.18);
+       }
+    
+           /* Image: softened, rounded and inside card (keeps consistent crop) */
         .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--card-shadow);
-        }
+          width: 100%;
+          height: 210px; /* consistent image height for uniform cards */
+          object-fit: cover;
+          border-radius: 12px;
+          display: block;
+          border: 1px solid rgba(255,255,255,0.04);
+          box-shadow: 0 8px 28px rgba(0,0,0,0.45), 0 6px 16px rgba(0,168,255,0.06);
+          transition: transform 0.5s cubic-bezier(0.2,0.9,0.2,1), filter 0.45s;
+          filter: contrast(1.02) saturate(1.05);
+       }
+
+           /* slight parallax/zoom on hover */
+        .project-card:hover .project-image {
+           transform: scale(1.035) translateY(-4px);
+           filter: brightness(1.02) contrast(1.05);
+       }
 
         .project-card h3 {
             font-size: 1.4rem;
