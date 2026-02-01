@@ -595,7 +595,7 @@
         }
 
         /* Chatbot Styles */
-/* Refined glassy chatbot button: nearly transparent with subtle blue hints */
+/* Ultra-transparent glassy chatbot button with very subtle blue hints */
 .chatbot-btn {
     position: fixed;
     right: 30px;
@@ -603,13 +603,13 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.015); /* nearly invisible glass */
-    border: 1px solid rgba(0, 168, 255, 0.06);
+    background: rgba(255, 255, 255, 0.005); /* much more transparent glass */
+    border: 1px solid rgba(0, 168, 255, 0.04);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.02),         /* subtle inner sheen */
-        0 6px 18px rgba(0, 168, 255, 0.04);          /* faint base glow */
+        inset 0 1px 0 rgba(255,255,255,0.01),   /* tiny inner sheen */
+        0 6px 18px rgba(0, 168, 255, 0.02);     /* very faint base glow */
     transition: transform 220ms var(--transition), box-shadow 220ms ease, background 220ms ease, opacity 220ms ease;
     z-index: 999;
     display: flex;
@@ -621,7 +621,7 @@
     overflow: visible;
 }
 
-/* A soft, diffuse halo via a pseudo element — preserves near-transparency while hinting at blue light */
+/* Subtle diffuse halo to hint blue light without overpowering transparency */
 .chatbot-btn::after {
     content: "";
     position: absolute;
@@ -631,39 +631,39 @@
     height: 180%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(circle at 50% 40%, rgba(0,168,255,0.12) 0%, rgba(0,168,255,0.04) 25%, transparent 55%);
-    filter: blur(14px);
-    opacity: 0.55;
+    background: radial-gradient(circle at 50% 40%, rgba(0,168,255,0.08) 0%, rgba(0,168,255,0.03) 20%, transparent 45%);
+    filter: blur(12px);
+    opacity: 0.30; /* lowered so glow stays subtle */
     pointer-events: none;
-    mix-blend-mode: screen; /* keeps the glow subtle against dark backgrounds */
+    mix-blend-mode: screen;
     transition: opacity 220ms ease, transform 220ms ease;
 }
 
-/* Hover: gentle lift + slightly stronger glow for affordance */
+/* Hover: small lift + mild increase in glow for affordance */
 .chatbot-btn:hover {
-    transform: translateY(-6px) scale(1.04);
+    transform: translateY(-5px) scale(1.03);
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.03),
-        0 14px 40px rgba(0, 168, 255, 0.12),
-        0 0 28px rgba(0, 168, 255, 0.06);
+        inset 0 1px 0 rgba(255,255,255,0.015),
+        0 12px 36px rgba(0, 168, 255, 0.06),
+        0 0 20px rgba(0, 168, 255, 0.04);
 }
 .chatbot-btn:hover::after {
-    opacity: 0.9;
-    transform: translate(-50%, -50%) scale(1.03);
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1.02);
 }
 
-/* Keyboard focus for accessibility */
+/* Focus (accessibility): very soft ring */
 .chatbot-btn:focus {
     box-shadow:
-        0 0 0 6px rgba(0,168,255,0.06),
-        inset 0 1px 0 rgba(255,255,255,0.03);
+        0 0 0 6px rgba(0,168,255,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.015);
 }
 
-/* Icon: keep it readable yet softly glowy */
+/* Icon: readable but slightly toned down glow */
 .chatbot-btn i {
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.6rem;
-    text-shadow: 0 0 6px rgba(0,168,255,0.14);
+    text-shadow: 0 0 5px rgba(0,168,255,0.10);
     transition: text-shadow 220ms ease, transform 220ms ease;
 }
 
@@ -679,7 +679,7 @@
     .chatbot-btn::after {
         width: 200%;
         height: 200%;
-        filter: blur(12px);
+        filter: blur(10px);
     }
 
     .chatbot-btn i {
