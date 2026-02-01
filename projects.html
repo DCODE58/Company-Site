@@ -442,6 +442,23 @@
              mix-blend-mode: overlay;
              z-index: 0;
          }
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -30%;
+            width: 160%;
+            height: 60%;
+            transform: rotate(-15deg);
+            background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01) 40%, rgba(255,255,255,0.06) 100%);
+            opacity: 0.5;
+            filter: blur(12px);
+            pointer-events: none;
+            z-index: 0;
+          }
+
+           /* move card content above the visual overlays */
+          .project-card > * { position: relative; z-index: 1; }
 
         .project-card:hover {
             transform: translateY(-8px);
