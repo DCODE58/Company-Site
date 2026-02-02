@@ -461,6 +461,34 @@
     .search-container { min-width: 180px; }
     #project-search { padding-left: 46px; padding-right: 12px; }
 }
+        /* Center a single visible card and keep its width from stretching */
+#projects-container.single-result {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* keep card at top of container */
+    gap: 2.5rem; /* keep spacing consistent if layout briefly changes */
+}
+
+/* Constrain the single card so it doesn't stretch */
+#projects-container.single-result .project-card {
+    width: min(540px, 92%); /* fixed max width, responsive on very small screens */
+    max-width: 540px;
+    flex: 0 0 auto;
+    margin: 0; /* reset any grid-specific margin behaviors */
+}
+
+/* Maintain the same visual spacing/box-shadow behavior */
+#projects-container.single-result .project-card:hover {
+    transform: translateY(-10px) scale(1.01);
+}
+
+/* Mobile tweak: narrower card on small screens */
+@media (max-width: 480px) {
+    #projects-container.single-result .project-card {
+        width: 92%;
+        max-width: none;
+    }
+}
         .no-results {
             text-align: center;
             padding: 3rem;
@@ -1055,10 +1083,18 @@
                 }
             });
             
-            // Show/hide no results message
-            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-        }
-        
+           // Show/hide no results message
+noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+
+// Toggle single-result class on the container so a lone card stays centered and constrained
+const projectsContainer = document.getElementById('projects-container');
+if (projectsContainer) {
+    if (visibleCount === 1) {
+        projectsContainer.classList.add('single-result');
+    } else {
+        projectsContainer.classList.remove('single-result');
+    }
+}
         // Initialize with all projects visible
         filterProjects('all');
 
