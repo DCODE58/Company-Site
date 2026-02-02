@@ -1086,15 +1086,6 @@
            // Show/hide no results message
 noResults.style.display = visibleCount === 0 ? 'block' : 'none';
 
-// Toggle single-result class on the container so a lone card stays centered and constrained
-const projectsContainer = document.getElementById('projects-container');
-if (projectsContainer) {
-    if (visibleCount === 1) {
-        projectsContainer.classList.add('single-result');
-    } else {
-        projectsContainer.classList.remove('single-result');
-    }
-}
         // Initialize with all projects visible
         filterProjects('all');
 
