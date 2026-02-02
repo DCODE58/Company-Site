@@ -1070,6 +1070,60 @@
         chatbotBtn.addEventListener('click', () => {
             chatbotContainer.classList.toggle('open');
         });
+        // debounce helper
+function debounce(fn, wait=250){
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(()=> fn(...args), wait);
+  };
+}
+
+// accessible filter buttons: toggle aria-pressed & update active class
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // standard single-select behavior
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+    // call existing filter logic
+    const filterValue = btn.dataset.filter;
+    filterProjects(filterValue, projectSearch.value.toLowerCase());
+  });
+
+  // keyboard: allow Enter/Space to activate
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      btn.click();
+    }
+  });
+});
+
+// debounce search input
+projectSearch.addEventListener('input', debounce(() => {
+  const searchTerm = projectSearch.value.toLowerCase();
+  const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+  filterProjects(activeFilter, searchTerm);
+}, 200));
+
+// clear button visibility
+const clearBtn = document.querySelector('.search-clear');
+projectSearch.addEventListener('input', () => {
+  if (clearBtn) clearBtn.hidden = projectSearch.value.trim() === '';
+});
+if (clearBtn) {
+  clearBtn.addEventListener('click', () => {
+    projectSearch.value = '';
+    clearBtn.hidden = true;
+    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+    filterProjects(activeFilter, '');
+    projectSearch.focus();
+  });
+}
     </script>
 </body>
 </html>
