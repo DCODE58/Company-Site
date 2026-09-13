@@ -498,9 +498,24 @@
              backdrop-filter: blur(10px) saturate(140%);
              -webkit-backdrop-filter: blur(10px) saturate(140%);
              box-shadow: 0 10px 30px rgba(0, 116, 204, 0.12),inset 0 1px 0 rgba(255,255,255,0.03);
-             transition: transform 0.45s cubic-bezier(0.2,0.9,0.2,1), box-shadow 0.45s;
+             transition: transform 0.45s cubic-bezier(0.2,0.9,0.2,1), box-shadow 0.45s, opacity 0.6s ease;
              transform-origin: center;
+             opacity: 0;
+             transform: translateY(30px) scale(0.96);
            }
+
+           .project-card.in-view {
+             transform: translateY(0) scale(1);
+             opacity: 1;
+           }
+
+           .projects-grid .project-card:nth-child(1) { transition-delay: 0.05s; }
+           .projects-grid .project-card:nth-child(2) { transition-delay: 0.1s; }
+           .projects-grid .project-card:nth-child(3) { transition-delay: 0.15s; }
+           .projects-grid .project-card:nth-child(4) { transition-delay: 0.2s; }
+           .projects-grid .project-card:nth-child(5) { transition-delay: 0.25s; }
+           .projects-grid .project-card:nth-child(6) { transition-delay: 0.3s; }
+           .projects-grid .project-card:nth-child(n+7) { transition-delay: 0.35s; }
 
             .project-card::before {
              content: '';
@@ -1031,6 +1046,11 @@
         const projectSearch = document.getElementById('project-search');
         const noResults = document.getElementById('no-results');
         
+        // Trigger the staggered entrance reveal (delays are set per-card in CSS)
+        requestAnimationFrame(() => {
+            projectCards.forEach(card => card.classList.add('in-view'));
+        });
+        
         // Filter by category
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -1077,14 +1097,6 @@ noResults.style.display = visibleCount === 0 ? 'block' : 'none';
         // Initialize with all projects visible
         filterProjects('all');
 
-        // Chatbot functionality
-        const chatbotBtn = document.querySelector('.chatbot-btn');
-        const chatbotContainer = document.querySelector('.chatbot-container');
-        
-        // Toggle chatbot visibility
-        chatbotBtn.addEventListener('click', () => {
-            chatbotContainer.classList.toggle('open');
-        });
         // debounce helper
 function debounce(fn, wait=250){
   let t;
