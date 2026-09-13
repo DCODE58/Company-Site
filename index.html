@@ -1016,6 +1016,12 @@
             transition: var(--transition);
         }
 
+        .chatbot-input input:disabled,
+        .chatbot-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .chatbot-input input:focus {
             border-color: var(--primary-blue);
             box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
@@ -1538,6 +1544,11 @@
         const chatInput = document.getElementById('chatbot-input-field');
         const chatSend = document.querySelector('.chatbot-send');
         const chatMessages = document.querySelector('.chatbot-messages');
+        // Backend endpoint that proxies to DeepSeek (see felicity-backend/README.md).
+        // Replace with your deployed backend's URL.
+        const CHAT_API_ENDPOINT = 'https://your-backend-domain.com/api/chat';
+        const CHAT_REQUEST_TIMEOUT_MS = 20000;
+
         const CHAT_HISTORY_KEY = 'felicity_chat_history';
         const CHAT_OPENED_KEY = 'felicity_has_opened';
 
@@ -1577,7 +1588,7 @@
         });
 
         // Send message function
-        function sendMessage() {
+        async function sendMessage() {
             const message = chatInput.value.trim();
             if (message === '') return;
 
@@ -1585,18 +1596,59 @@
             addMessage(message, 'user');
             chatInput.value = '';
 
-            // Show typing indicator
+            // Prevent double-sends while a reply is in flight
+            chatSend.disabled = true;
+            chatInput.disabled = true;
+
             showTypingIndicator();
 
-            // Simulate bot response after a delay
-            setTimeout(() => {
+            try {
+                const reply = await getAiReply(message);
                 removeTypingIndicator();
-                const botResponse = getBotResponse(message);
-                addMessage(botResponse, 'bot');
-                
-                // Scroll to bottom of chat
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+                addMessage(reply, 'bot');
+            } finally {
+                chatSend.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        // Ask the DeepSeek-backed API for a reply; fall back to the local
+        // rule-based responder if the backend/API is unreachable, slow, or
+        // returns an error — so the chat never just goes silent.
+        async function getAiReply(message) {
+            const recentHistory = [...chatMessages.querySelectorAll('.message')]
+                .slice(-10)
+                .map(m => ({
+                    text: m.querySelector('.message-content').textContent,
+                    sender: m.classList.contains('message-user') ? 'user' : 'bot'
+                }));
+
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), CHAT_REQUEST_TIMEOUT_MS);
+
+            try {
+                const response = await fetch(CHAT_API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, history: recentHistory }),
+                    signal: controller.signal
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok || !data.reply) {
+                    console.warn('Felicity API error, falling back to local responses:', response.status, data.error);
+                    return getBotResponse(message);
+                }
+
+                return data.reply;
+            } catch (err) {
+                console.warn('Felicity API unreachable, falling back to local responses:', err.message);
+                return getBotResponse(message);
+            } finally {
+                clearTimeout(timeout);
+            }
         }
 
         // Send message on button click
