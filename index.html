@@ -704,30 +704,50 @@
         }
 
         /* Chatbot Styles */
-/* Ultra-transparent glassy chatbot button with very subtle blue hints */
+/* Glassy chatbot button — consistent with the site's header/mobile-nav glass */
 .chatbot-btn {
     position: fixed;
     right: 30px;
     bottom: 40px;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.005); /* much more transparent glass */
-    border: 1px solid rgba(0, 168, 255, 0.04);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    height: 58px;
+    padding: 0 1.4rem 0 1.1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 168, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.01),   /* tiny inner sheen */
-        0 6px 18px rgba(0, 168, 255, 0.02);     /* very faint base glow */
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(0, 168, 255, 0.1);
     transition: transform 220ms var(--transition), box-shadow 220ms ease, background 220ms ease, opacity 220ms ease;
     z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.65rem;
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
     overflow: visible;
+}
+
+.chatbot-btn-label {
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* First-visit attention pulse — draws the eye without being permanently distracting */
+@keyframes chatPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0.4), 0 8px 24px rgba(0,0,0,0.35); }
+    70%  { box-shadow: 0 0 0 16px rgba(0, 168, 255, 0), 0 8px 24px rgba(0,0,0,0.35); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0), 0 8px 24px rgba(0,0,0,0.35); }
+}
+
+.chatbot-btn.pulse {
+    animation: chatPulse 1.8s ease-out 3;
 }
 
 /* Subtle diffuse halo to hint blue light without overpowering transparency */
@@ -736,53 +756,61 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 180%;
-    height: 180%;
+    width: 160%;
+    height: 220%;
     transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 40%, rgba(0,168,255,0.08) 0%, rgba(0,168,255,0.03) 20%, transparent 45%);
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 40%, rgba(0,168,255,0.1) 0%, rgba(0,168,255,0.04) 30%, transparent 60%);
     filter: blur(12px);
-    opacity: 0.30; /* lowered so glow stays subtle */
+    opacity: 0.4;
     pointer-events: none;
     mix-blend-mode: screen;
     transition: opacity 220ms ease, transform 220ms ease;
+    z-index: -1;
 }
 
 /* Hover: small lift + mild increase in glow for affordance */
 .chatbot-btn:hover {
     transform: translateY(-5px) scale(1.03);
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.015),
-        0 12px 36px rgba(0, 168, 255, 0.06),
-        0 0 20px rgba(0, 168, 255, 0.04);
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 14px 36px rgba(0, 168, 255, 0.15),
+        0 0 24px rgba(0, 168, 255, 0.12);
 }
 .chatbot-btn:hover::after {
-    opacity: 0.55;
+    opacity: 0.6;
     transform: translate(-50%, -50%) scale(1.02);
 }
 
 /* Focus (accessibility): very soft ring */
 .chatbot-btn:focus {
     box-shadow:
-        0 0 0 6px rgba(0,168,255,0.04),
-        inset 0 1px 0 rgba(255,255,255,0.015);
+        0 0 0 6px rgba(0,168,255,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
 /* Icon: readable but slightly toned down glow */
 .chatbot-btn i {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.6rem;
-    text-shadow: 0 0 5px rgba(0,168,255,0.10);
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.4rem;
+    text-shadow: 0 0 6px rgba(0,168,255,0.2);
     transition: text-shadow 220ms ease, transform 220ms ease;
 }
 
-/* Slightly smaller on small screens */
+/* Icon-only circle on small screens — no room for the label there,
+   so the pulse animation carries the "notice me" job instead */
 @media (max-width: 768px) {
     .chatbot-btn {
         right: 20px;
         bottom: 20px;
         width: 56px;
         height: 56px;
+        padding: 0;
+        border-radius: 50%;
+    }
+
+    .chatbot-btn-label {
+        display: none;
     }
 
     .chatbot-btn::after {
@@ -1359,27 +1387,21 @@
     </footer>
 
     <!-- Chatbot Button -->
-    <button class="chatbot-btn" aria-label="Open Chat">
+    <button class="chatbot-btn" aria-label="Chat with Felicity">
         <i class="fas fa-comment-dots"></i>
+        <span class="chatbot-btn-label">Chat with Felicity</span>
     </button>
 
     <!-- Chatbot Container -->
     <div class="chatbot-container">
         <div class="chatbot-header">
             <i class="fas fa-robot"></i>
-            <h3>DCODE Assistant</h3>
+            <h3>Felicity Bot</h3>
             <button class="chatbot-close" aria-label="Close Chat">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="chatbot-messages">
-            <div class="message message-bot">
-                <div class="message-content">
-                    Hello! I'm the DCODE assistant. How can I help you today?
-                </div>
-                <div class="message-time">Just now</div>
-            </div>
-        </div>
+        <div class="chatbot-messages"></div>
         <div class="chatbot-input">
             <input type="text" placeholder="Type your message..." id="chatbot-input-field">
             <button class="chatbot-send" aria-label="Send Message">
@@ -1516,10 +1538,37 @@
         const chatInput = document.getElementById('chatbot-input-field');
         const chatSend = document.querySelector('.chatbot-send');
         const chatMessages = document.querySelector('.chatbot-messages');
+        const CHAT_HISTORY_KEY = 'felicity_chat_history';
+        const CHAT_OPENED_KEY = 'felicity_has_opened';
+
+        // Persist/restore chat history across page reloads
+        function saveHistory() {
+            const history = [...chatMessages.querySelectorAll('.message')].map(m => ({
+                text: m.querySelector('.message-content').textContent,
+                sender: m.classList.contains('message-user') ? 'user' : 'bot',
+                time: m.querySelector('.message-time').textContent
+            }));
+            try {
+                localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(history));
+            } catch (e) { /* storage unavailable — chat just won't persist */ }
+        }
+
+        function loadHistory() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(CHAT_HISTORY_KEY) || 'null');
+                if (Array.isArray(saved) && saved.length > 0) {
+                    saved.forEach(m => addMessage(m.text, m.sender, m.time, false));
+                    return true;
+                }
+            } catch (e) { /* corrupted/unavailable storage — fall back to default greeting */ }
+            return false;
+        }
 
         // Toggle chatbot visibility
         chatbotBtn.addEventListener('click', () => {
             chatbotContainer.classList.toggle('open');
+            chatbotBtn.classList.remove('pulse');
+            try { localStorage.setItem(CHAT_OPENED_KEY, '1'); } catch (e) {}
         });
 
         // Close chatbot
@@ -1561,7 +1610,7 @@
         });
 
         // Add a new message to the chat
-        function addMessage(text, sender) {
+        function addMessage(text, sender, time, persist = true) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message message-${sender}`;
             
@@ -1571,7 +1620,7 @@
             
             const messageTime = document.createElement('div');
             messageTime.className = 'message-time';
-            messageTime.textContent = getCurrentTime();
+            messageTime.textContent = time || getCurrentTime();
             
             messageDiv.appendChild(messageContent);
             messageDiv.appendChild(messageTime);
@@ -1579,6 +1628,8 @@
             
             // Scroll to bottom of chat
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            if (persist) saveHistory();
         }
 
         // Show typing indicator
@@ -1615,17 +1666,48 @@
         function getBotResponse(userMessage) {
             const lowerMessage = userMessage.toLowerCase();
             
-            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+            if (lowerMessage.includes('your name') || lowerMessage.includes('who are you') || lowerMessage.includes('felicity')) {
+                return "I'm Felicity, DCODE's virtual assistant! I'm here to answer questions about our services, projects, and how to get in touch.";
+            } else if (/\b(hello|hi|hey|good morning|good afternoon|good evening|howdy|yo)\b/.test(lowerMessage)) {
                 return "Hello there! How can I assist you with DCODE services today?";
-            } else if (lowerMessage.includes('service') || lowerMessage.includes('offer')) {
+            } else if (lowerMessage.includes('project') || lowerMessage.includes('portfolio') || lowerMessage.includes('example') || lowerMessage.includes('built') || lowerMessage.includes('work you')) {
+                if (lowerMessage.includes('ecommerce') || lowerMessage.includes('e-commerce') || lowerMessage.includes('online store') || lowerMessage.includes('shop')) {
+                    return "Yes! We built an E-Commerce Platform as one of our recent projects. You can see it, along with our other web work, on the Projects page.";
+                } else if (lowerMessage.includes('mobile') || lowerMessage.includes('app') || lowerMessage.includes('ios') || lowerMessage.includes('android') || lowerMessage.includes('fitness')) {
+                    return "We built a Fitness Tracker App as part of our mobile portfolio — check the Projects page and filter by \"Mobile\" to see it and similar work.";
+                } else if (lowerMessage.includes('cloud') || lowerMessage.includes('migration') || lowerMessage.includes('hosting') || lowerMessage.includes('aws') || lowerMessage.includes('azure')) {
+                    return "One of our standout projects is an Enterprise Cloud Migration. Filter by \"Cloud\" on the Projects page to see the full case.";
+                } else if (lowerMessage.includes('ai') || lowerMessage.includes('chatbot') || lowerMessage.includes('machine learning') || lowerMessage.includes('automation')) {
+                    return "We've built AI solutions too — including a Customer Support AI project. You can find it under the \"AI\" filter on the Projects page.";
+                } else if (lowerMessage.includes('dashboard') || lowerMessage.includes('analytics') || lowerMessage.includes('data')) {
+                    return "Take a look at our Business Analytics Dashboard project — it's a good example of our data-focused web work, on the Projects page.";
+                } else if (lowerMessage.includes('blockchain') || lowerMessage.includes('supply chain')) {
+                    return "We worked on a Supply Chain Blockchain project — you'll find it under \"Web\" on the Projects page.";
+                }
+                return "We've completed projects across web, mobile, design, cloud, and AI — including an e-commerce platform, a fitness app, and a customer support AI. Head to the Projects page and filter by category, or ask me about a specific type of project!";
+            } else if (lowerMessage.includes('service') || lowerMessage.includes('offer') || lowerMessage.includes('what do you do') || lowerMessage.includes('capabilities')) {
                 return "We offer a range of services including web development, UI/UX design, mobile app development, and more. Would you like details on any specific service?";
-            } else if (lowerMessage.includes('web') || lowerMessage.includes('website')) {
+            } else if (/\b(web|website|site)\b/.test(lowerMessage)) {
                 return "Our web development services include creating responsive websites, SPAs, e-commerce solutions, and CMS development. We use modern technologies like React, Angular, and Node.js.";
-            } else if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone')) {
+            } else if (lowerMessage.includes('design') || lowerMessage.includes('ui') || lowerMessage.includes('ux') || lowerMessage.includes('interface') || lowerMessage.includes('branding')) {
+                return "Our design team handles UI/UX design, branding, and interactive prototypes — everything needed to make a product look and feel great, not just work well.";
+            } else if (/\b(app|mobile|ios|android)\b/.test(lowerMessage)) {
+                return "We build cross-platform mobile apps for iOS and Android, from MVPs to full production apps. Want to know more about our mobile process?";
+            } else if (lowerMessage.includes('cloud') || lowerMessage.includes('hosting') || lowerMessage.includes('server') || lowerMessage.includes('infrastructure') || lowerMessage.includes('aws') || lowerMessage.includes('azure')) {
+                return "We handle cloud infrastructure, migrations, and scaling — including AWS and Azure environments. What kind of cloud setup are you working with?";
+            } else if (lowerMessage.includes('secur') || lowerMessage.includes('hack') || lowerMessage.includes('protect') || lowerMessage.includes('privacy')) {
+                return "Security is core to everything we build — from secure coding practices to infrastructure hardening. Want details on a specific area?";
+            } else if (lowerMessage.includes(' ai') || lowerMessage.startsWith('ai') || lowerMessage.includes('machine learning') || lowerMessage.includes('automation') || lowerMessage.includes('chatbot')) {
+                return "We build AI-powered features too — chatbots, automation, and machine learning integrations. Curious how that could fit your project?";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone') || lowerMessage.includes('reach') || lowerMessage.includes('call')) {
                 return "You can contact us at dcodedevs@gmail.com or call +254-768-372532. Our office is in Nairobi, Kenya.";
-            } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+            } else if (lowerMessage.includes('where') || lowerMessage.includes('location') || lowerMessage.includes('based') || lowerMessage.includes('office')) {
+                return "We're based in Nairobi, Kenya, and work with clients remotely worldwide.";
+            } else if (lowerMessage.includes('hour') || lowerMessage.includes('open') || lowerMessage.includes('available') || lowerMessage.includes('when can')) {
+                return "Our team is generally available during business hours (EAT), but feel free to message us anytime — we'll get back to you as soon as we can.";
+            } else if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('quote') || lowerMessage.includes('budget') || lowerMessage.includes('how much')) {
                 return "Our pricing depends on the project scope and requirements. Could you share more details about what you need so we can provide an accurate estimate?";
-            } else if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+            } else if (lowerMessage.includes('thank')) {
                 return "You're welcome! Is there anything else I can help you with?";
             } else {
                 const randomResponses = [
@@ -1639,10 +1721,17 @@
             }
         }
 
-        // Initialize chat with welcome message if empty
-        if (chatMessages.children.length === 0) {
-            addMessage("Hello! I'm the DCODE assistant. How can I help you today?", 'bot');
+        // Restore previous conversation if there is one; otherwise show the greeting
+        if (!loadHistory()) {
+            addMessage("Hi, I'm Felicity 👋 DCODE's virtual assistant. How can I help you today?", 'bot');
         }
+
+        // Draw attention to the chat button for first-time visitors only
+        try {
+            if (!localStorage.getItem(CHAT_OPENED_KEY)) {
+                setTimeout(() => chatbotBtn.classList.add('pulse'), 1200);
+            }
+        } catch (e) { /* storage unavailable — skip the pulse */ }
     </script>
 </body>
 </html>
