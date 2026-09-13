@@ -440,6 +440,11 @@
             transform: scale(1.15) rotate(-6deg);
         }
 
+        .service-card.active .icon,
+        .service-card.closing .icon {
+            transform: none;
+        }
+
         .service-card.active {
             transition-delay: 0s;
             position: fixed;
