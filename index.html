@@ -554,6 +554,31 @@
             display: block;
         }
 
+        /* "Tap to explore" hint — visible by default since hover alone
+           doesn't tell touch users the card is interactive */
+        .service-card::after {
+            content: 'Tap to explore \2192';
+            display: inline-block;
+            margin-top: 1.2rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--primary-blue);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+
+        .service-card.active::after,
+        .service-card.closing::after {
+            display: none;
+        }
+
         .close-btn {
             position: absolute;
             top: 1.2rem;
