@@ -1545,7 +1545,10 @@
         const chatSend = document.querySelector('.chatbot-send');
         const chatMessages = document.querySelector('.chatbot-messages');
         // Backend endpoint that proxies to DeepSeek (see felicity-backend/README.md).
-        // Replace with your deployed backend's URL.
+        // NOTE: the backend route is /api/chat, not the bare origin — this was
+        // the cause of the "Failed to fetch" / CORS-preflight failures in the
+        // browser console (a wrong path plus a missing ALLOWED_ORIGINS entry
+        // on the Render deployment).
         const CHAT_API_ENDPOINT = 'https://csbackend-dd80.onrender.com/api/chat';
         const CHAT_REQUEST_TIMEOUT_MS = 20000;
 
